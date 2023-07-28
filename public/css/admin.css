@@ -1,0 +1,16 @@
+.description-container {
+    max-height: 80px; /* Adjust the desired height for showing a few lines */
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .description-container .description-toggle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #fff;
+    padding: 5px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  

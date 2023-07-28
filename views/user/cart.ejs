@@ -1,0 +1,316 @@
+<%- include("./partials/header") %>
+  <body>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3">
+                <div class="header__logo">
+                    <a href="#"><img src="img/logo.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <nav class="header__menu">
+                    <ul>
+                        <li class="active"><a href="/">Home</a></li>
+                        <li><a href="/products">Shop</a></li>
+                        <li><a href="#">Pages</a>
+                            <ul class="header__menu__dropdown">
+                                <li><a href="/products">Shop Details</a></li>
+                                <li><a href="/cart">Shoping Cart</a></li>
+                                <li><a href="/checkout">Check Out</a></li>
+                                
+                            </ul>
+                        </li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+       
+        </div>
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Hero Section Begin -->
+ 
+    <!-- Hero Section End -->
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Shopping Cart</h2>
+                        <div class="breadcrumb__option">
+                            <a href="/home">Home</a>
+                            <span>Shopping Cart</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Shoping Cart Section Begin -->
+    <section class="shoping-cart spad">
+        <div class="container">
+
+       
+          
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="shoping__cart__table">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Products</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Total</th>
+                      <th scope="col">Remove</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% if (cartItems.length === 0) { %>
+                    <tr>
+                      <td colspan="5" class="text-center">Cart is empty</td>
+                    </tr>
+                    <% } else { %>
+                    <% cartItems.forEach((item) => { %>
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img src="/productImages/<%= item.product.image[0] %>" width="50px" height="50" alt="IMG">
+                          <h5 class="ml-2"><%= item.product.productname %></h5>
+                        </div>
+                      </td>
+                      <td>Rs.<%= item.offer_price %></td>
+                      <td>
+                        <div class="quantity">
+                          <button type="button" class="minus-btn btn btn-secondary" data-product="<%= item.product._id %>" data-quantity="<%= item.product.quantity %>">-</button>
+                          <input type="number" class="form-control quantity-input" name="quantity_<%= item.product._id %>"
+                            value="<%= item.quantity %>" readonly>
+                          <button type="button" class="plus-btn btn btn-secondary" data-product="<%= item.product._id %>" data-quantity="<%= item.product.quantity %>">+</button>
+                        </div>
+                      </td>
+                      <td id="price_<%= item.product._id %>">Rs.<%= item.offer_price * item.quantity %></td>
+                      <td class="shoping__cart__item__close">
+                        <td class="column-6">
+                          <a href="/deletecart/<%= item.product._id %>" class="remove-button">Remove</a>
+                        </td>
+                      </td>
+                    </tr>
+                    <% }) %>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="shoping__cart__btns">
+                <a href="/products" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="shoping__continue">
+               
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="shoping__checkout">
+                <h5>Cart Total</h5>
+                <ul>
+                  <li id="total">Subtotal: <span id="totalValue">0</span></li>
+                </ul>
+                <a href="/checkout" class="primary-btn">PROCEED TO CHECKOUT</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <style>
+        /* Responsive adjustments */
+        .shoping-cart {
+          padding: 60px 0;
+        }
+      
+        .shoping__cart__table {
+          overflow-x: auto;
+        }
+      
+        .shoping__cart__table table {
+          width: 100%;
+        }
+      
+        .shoping__cart__table th {
+          white-space: nowrap;
+        }
+      
+        .shoping__cart__item__close {
+          white-space: nowrap;
+        }
+      
+        .shoping__cart__btns {
+          margin-top: 30px;
+          text-align: center;
+        }
+      
+        .shoping__discount {
+          text-align: center;
+          margin-top: 30px;
+        }
+      
+        .shoping__discount form {
+          display: inline-block;
+        }
+      
+        .shoping__discount input {
+          width: 200px;
+          max-width: 100%;
+        }
+      
+        .shoping__checkout {
+          text-align: right;
+          margin-top: 30px;
+        }
+      
+        .shoping__checkout ul {
+          list-style: none;
+          padding: 0;
+          margin-bottom: 10px;
+        }
+      
+        .shoping__checkout li {
+          display: inline-block;
+          margin-right: 20px;
+          font-weight: bold;
+        }
+      
+        .remove-button {
+          color: #e74c3c;
+          cursor: pointer;
+          
+        }
+      
+        /* Additional styling */
+        .quantity {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          
+        }
+      
+      
+        .quantity .btn {
+          padding: 3px 10px;
+        }
+      </style>
+      
+  <script>
+   function calculateAndUpdateTotalAmount() {
+  var subtotal = 0;
+  $('.shoping__cart__table tbody tr').each(function() {
+    var quantity = parseInt($(this).find('.quantity-input').val());
+    var price = parseFloat($(this).find('td:nth-child(2)').text().replace('Rs.', ''));
+    var total = quantity * price;
+    subtotal += total;
+  });
+  var total = subtotal.toFixed(2);
+
+  $('#subtotalValue').text(subtotal.toFixed(2));
+  $('#totalValue').text(total);
+
+  // Send total amount to the server for saving into the database
+  $.ajax({
+    type: 'POST',
+    url: '/savetotalamount',
+    data: {
+      totalAmount: total
+    },
+    success: function(response) {
+      console.log('Total amount saved successfully!');
+    },
+    error: function(error) {
+      console.log('Error saving total amount:', error);
+    }
+  });
+}
+
+$(document).ready(function() {
+  $('.minus-btn').on('click', function() {
+    var productId = $(this).data('product');
+    var quantityInput = $('input[name="quantity_' + productId + '"]');
+    var quantity = parseInt(quantityInput.val());
+
+    if (quantity > 1) {
+      quantity--;
+      quantityInput.val(quantity);
+      updateCartItemQuantity(productId, quantity);
+      calculateAndUpdateTotalAmount();
+    }
+  });
+
+  $('.plus-btn').on('click', function() {
+    var productId = $(this).data('product');
+    var quantityInput = $('input[name="quantity_' + productId + '"]');
+    var quantity = parseInt(quantityInput.val());
+
+    var productQuantity = parseInt($(this).data('quantity'));
+
+    if (quantity < productQuantity) {
+      quantity++;
+      quantityInput.val(quantity);
+      updateCartItemQuantity(productId, quantity);
+      calculateAndUpdateTotalAmount();
+    }
+  });
+
+  calculateAndUpdateTotalAmount();
+});
+
+function updateCartItemQuantity(productId, quantity) {
+  $.ajax({
+    type: 'POST',
+    url: '/update-cart-item',
+    data: {
+      product: productId,
+      quantity: quantity
+    },
+    success: function (response) {
+      var totalPrice = quantity * response.price;
+      $('#price_' + productId).text('Rs.' + totalPrice.toFixed(2));
+
+      // Disable minus button if quantity is 1
+      var minusBtn = $('.minus-btn[data-product="' + productId + '"]');
+      if (quantity === 1) {
+        minusBtn.prop('disabled', true);
+      } else {
+        minusBtn.prop('disabled', false);
+      }
+
+      // Disable plus button if quantity reaches the product quantity limit
+      var plusBtn = $('.plus-btn[data-product="' + productId + '"]');
+      var productQuantity = parseInt(plusBtn.data('quantity'));
+      if (quantity >= productQuantity) {
+        plusBtn.prop('disabled', true);
+      } else {
+        plusBtn.prop('disabled', false);
+      }
+    },
+    error: function (error) {
+      console.log(error);
+    }
+  });
+}
+</script>
+                                                        
+
+<%- include("./partials/footer") %>

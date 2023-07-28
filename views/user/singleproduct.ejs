@@ -1,0 +1,353 @@
+<%- include("./partials/header") %>
+<body>
+
+  <!-- Breadcrumb Section Begin -->
+  <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <div class="breadcrumb__text">
+            <h2><%= product.productname%></h2>
+            <div class="breadcrumb__option">
+              <a href="/home">Home</a>
+              <span>Vegetable’s Package</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Breadcrumb Section End -->
+
+  <!-- Product Details Section Begin -->
+  <section class="product-details spad">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-6">
+          <div class="product__details__pic">
+            <% if (product.image && product.image.length > 0) { %>
+            <div class="product__details__pic__item">
+              <div class="zoom-effect-container">
+                <img id="main-image" class="product__details__pic__item--large"
+                  src="/productImages/<%= product.image[0] %>" alt="">
+              </div>
+            </div>
+            <div class="product__details__pic__slider owl-carousel">
+              <% for (var i = 0; i < product.image.length; i++) { %>
+              <img class="slider-image" data-imgbigurl="/productImages/<%= product.image[i] %>"
+                src="/productImages/<%= product.image[i] %>" alt="">
+              <% } %>
+            </div>
+            <% } else { %>
+            No image available.
+            <% } %>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+          <form action="/cart/<%= product._id %>" method="POST">
+            <div class="product__details__text">
+              <h3><%= product.productname %></h3>
+              <div class="product__details__rating">
+                <% if (product.reviews && product.reviews.length > 0) { %>
+                  <% let totalRating = 0; %>
+                  <% product.reviews.forEach(function(review) { %>
+                    <% totalRating += review.rating; %>
+                  <% }) %>
+                  <% const averageRating = totalRating / product.reviews.length; %>
+                  <% for (let i = 1; i <= 5; i++) { %>
+                    <% if (i <= averageRating) { %>
+                      <i class="fa fa-star"></i>
+                    <% } else if (i - averageRating <= 0.5) { %>
+                      <i class="fa fa-star-half-o"></i>
+                    <% } else { %>
+                      <i class="fa fa-star-o"></i>
+                    <% } %>
+                  <% } %>
+                  <span class="review-count clickable" data-toggle="modal" data-target="#reviewsModal">
+                    <%= product.reviews.length %> review<%= product.reviews.length === 1 ? '' : 's' %>
+                  </span>
+                <% } else { %>
+                  <span>No reviews yet</span>
+                <% } %>
+              </div>
+              
+              
+              
+              <h5><del>Rs.<%= product.price %>/kg</del></h5>
+              <div class="product__details__price"> Rs.<%= product.offer_price %>/kg</div>
+              <div class="product__details__quantity">
+                <div class="quantity">
+                
+                        <input type="hidden" name="quantity_<%= product._id %>" value="1">
+                       
+                  
+                </div>
+            </div>
+            
+              <% if (product.quantity > 0) { %>
+              <button type="submit" class="primary-btn">ADD TO CART</button>
+              <% } else { %>
+              <div class="out-of-stock text-danger">Out of Stock</div>
+              <% } %>
+            </div>
+          </form>
+          <ul>
+            <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
+            <li><b>Weight</b> <span>1kg</span></li>
+            <li><b>Share on</b>
+              <div class="share">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="#"><i class="fa fa-pinterest"></i></a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="product__details__tab">
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" aria-selected="true">Description</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+              <div class="product__details__tab__desc">
+                <h6>Products Information</h6>
+                <p><%= product.description%></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Product Details Section End -->
+
+
+  <!-- Related Product Section End -->
+
+  <!-- Footer Section Begin -->
+  <footer class="footer spad">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="footer__about">
+            <div class="footer__about__logo">
+              <a href="./index.html"><img src="img/logo.png" alt=""></a>
+            </div>
+            <ul>
+              <li>Address: 60-49 Road 11378 New York</li>
+              <li>Phone: +65 11.188.888</li>
+              <li>Email: hello@colorlib.com</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+          <div class="footer__widget">
+            <h6>Useful Links</h6>
+            <ul>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">About Our Shop</a></li>
+              <li><a href="#">Secure Shopping</a></li>
+              <li><a href="#">Delivery infomation</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Our Sitemap</a></li>
+            </ul>
+            <ul>
+              <li><a href="#">Who We Are</a></li>
+              <li><a href="#">Our Services</a></li>
+              <li><a href="#">Projects</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">Innovation</a></li>
+              <li><a href="#">Testimonials</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-12">
+          <div class="footer__widget">
+            <h6>Join Our Newsletter Now</h6>
+            <p>Get E-mail updates about our latest shop and special offers.</p>
+            <form action="#">
+              <input type="text" placeholder="Enter your mail">
+              <button type="submit" class="site-btn">Subscribe</button>
+            </form>
+            <div class="footer__widget__social">
+              <a href="#"><i class="fa fa-facebook"></i></a>
+              <a href="#"><i class="fa fa-instagram"></i></a>
+              <a href="#"><i class="fa fa-twitter"></i></a>
+              <a href="#"><i class="fa fa-pinterest"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="footer__payment__methods">
+            <img src="img/payment-item.png" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="footer__copyright">
+            <p>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              © <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with
+              <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.elevatezoom.js"></script>
+<style>
+  .zoom-effect-container {
+    overflow: hidden;
+    position: relative;
+  }
+  .clickable {
+    cursor: pointer;
+  }
+
+  
+
+  .zoom-effect-container img {
+    transition: transform 0.3s;
+  }
+
+  .zoom-effect-container:hover img {
+    transform: scale(1.2);
+  }
+  /* Add this to your CSS file or style section */
+/* Add this to your CSS file or style section */
+.review-item {
+  margin-bottom: 10px;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-icon {
+  margin-right: 8px;
+  font-size: 24px;
+}
+
+.username {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.review-date {
+  font-size: 12px;
+  color: #888;
+}
+
+.rating {
+  color: gold;
+  font-size: 20px;
+}
+
+.review-comment {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.review-divider {
+  margin: 10px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+
+</style>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const mainImage = document.getElementById('main-image');
+    const sliderImages = document.querySelectorAll('.slider-image');
+
+    sliderImages.forEach((image) => {
+      image.addEventListener('mouseover', () => {
+        const imgUrl = image.getAttribute('data-imgbigurl');
+        mainImage.setAttribute('src', imgUrl);
+      });
+    });
+  });
+</script>
+<!-- Add this modal at the end of the page, after the main content -->
+<!-- Add this modal at the end of the page, after the main content -->
+<div class="modal fade" id="reviewsModal" tabindex="-1" role="dialog" aria-labelledby="reviewsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reviewsModalLabel">Reviews</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <% if (product.reviews && product.reviews.length > 0) { %>
+          <% product.reviews.forEach(function(review) { %>
+            <div class="review-item">
+              <div class="review-header">
+                <div class="user-icon">
+                  <i class="fa fa-user"></i>
+                </div>
+                <div class="user-info">
+                  <p class="username"><%= review.user.name %></p>
+                  
+                  <p class="review-date"><%= review.createdAt %></p>
+                  
+                </div>
+                <div class="rating">
+                  <% for (let i = 1; i <= 5; i++) { %>
+                    <% if (review.rating >= i) { %>
+                      <i class="fa fa-star"></i>
+                    <% } else { %>
+                      <i class="fa fa-star-o"></i>
+                    <% } %>
+                  <% } %>
+                </div>
+              </div>
+              <div class="review-comment">
+                <p><%= review.comment %></p>
+              </div>
+              <hr class="review-divider">
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p>No reviews yet</p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add this script at the end of your HTML file or in a separate JavaScript file -->
+
+
+
+
+<script>
+  // Wait for the page to load
+  $(document).ready(function () {
+    // Target the main image element by its ID and apply the ElevateZoom plugin
+    $('#main-image').elevateZoom({
+      gallery: 'product__details__pic__slider', // ID of the gallery containing additional images
+      cursor: 'crosshair', // Cursor type on zoom area
+      zoomType: 'inner', // Zoom type: 'inner', 'window', 'lens'
+      easing: true, // Smooth zooming effect
+      responsive: true, // Enable responsiveness
+    });
+  });
+</script>
+
+  </footer>
+  <!-- Footer Section End -->
+
+  <%- include("./partials/footer") %>

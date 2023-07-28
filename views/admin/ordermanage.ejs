@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title> Admin Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- datatable -->
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <!-- Favicon -->
+    <link href="/adminside/img/favicon.ico" rel="icon">
+    <!--fontawos-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/adminside/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/adminside/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/adminside/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/adminside/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner"
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-light navbar-light">
+                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary"><i class="fa me-2"></i>FreshToHome</h3>
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <img class="rounded-circle" src="/adminside/img/user.jpg" alt=""
+                            style="width: 40px; height: 40px;">
+                        <div
+                            class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+                        </div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0">AMAL</h6>
+                        <span>Admin</span>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="home" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="usermanage" class="nav-item nav-link "><i class="fa fa-user me-2"></i>User </a>
+                    <a href="category" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Category</a>
+                    <a href="products" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Products</a>
+                    <a href="#" class="nav-item nav-link active"><i class="fa fa-truck me-2"></i>Order</a>
+                    <a href="coupon" class="nav-item nav-link"><i class="fa fa-gift   me-2"></i>Coupon</a> 
+                    <a href="addBanner" class="nav-item nav-link "><i class="fa fa-flag   me-2"></i>Banner</a> 
+                    <a href="salesReport" class="nav-item nav-link "><i class="fa fa-file me-2"></i>Sales Report</a>
+                   
+
+
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <form class="d-none d-md-flex ms-4">
+                    <input class="form-control border-0" type="search" placeholder="Search">
+                </form>
+                <div class="navbar-nav align-items-center ms-auto">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="/adminside/img/user.jpg" alt=""
+                                style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">AMAL</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">My Profile</a>
+                            <a href="#" class="dropdown-item">Settings</a>
+                            <a href="logout" class="dropdown-item">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+
+            <!-- Recent Sales Start -->
+           
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Orders</h6>
+                    </div>
+                    <div class="table-responsive">
+                        <div class="col-12">
+                            <div class="bg-light rounded h-100 p-4">
+                                <div class="table-responsive">
+                                    <table class="table" style="text-align: left;" id="mytable">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">No</th>
+                                                <th scope="col">Order</th>
+                                                <th scope="col">User</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Amount</th>
+                                                <th scope="col">Paymode</th>
+                                                <th scope="col">View</th>
+                                                <th scope="col">Action</th>
+                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Table rows -->
+                                            <% order.reverse().forEach(function(order, index) { %>
+                                                <tr>
+                                                    <td><%= index + 1 %></td>
+                                                    <td class="truncate"><%= order.id %></td>
+                                                    <td class="truncate"><%= order.user.name %></td>
+                                                    <td class="truncate"><%= order.createdAt %></td>
+                                                    <td><%= order.total %></td>
+                                                    <td><%= order.paymentMethod %></td>
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn btn-primary" onclick="viewOrderDetails('<%= order._id %>')">View</button>
+                                                    </td>
+                                                    <td class="wrap-text">
+                                                        <select class="form-select order-status-select" aria-label="Order Status" data-order-id="<%= order._id %>">
+                                                            <option value="pending" <%= order.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                                                            <option value="shipped" <%= order.status === 'shipped' ? 'selected' : '' %>>Shipped</option>
+                                                            <option value="completed" <%= order.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                                                            <option value="cancelled" <%= order.status === 'cancelled' ? 'selected' : '' %>>Cancelled</option>
+                                                            <option value="returned" <%= order.status === 'returned' ? 'selected' : '' %>>Return</option>
+                                                        </select>
+                                                    </td>
+                                                 
+                                                </tr>
+                                            <% }) %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="orderDetailsModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="orderDetailsModalLabel">Order Details</h5>
+                            <div id="orderDetailsSection"></div>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="orderDetailsContent">
+                            <!-- Order details will be displayed here -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5>Order Information</h5>
+                                    <p id="orderDetailsOrderId"></p>
+                                    <p id="orderDetailsDate"></p>
+                                    <p id="orderDetailsPaymentMode"></p>
+                                    <p id="orderDetailsTotalAmount"></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Products</h5>
+                                    <div id="orderDetailsProducts">
+                                        <!-- Product details will be displayed here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- JavaScript Libraries -->
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="/adminside/lib/chart/chart.min.js"></script>
+            <script src="/adminside/lib/easing/easing.min.js"></script>
+            <script src="/adminside/lib/waypoints/waypoints.min.js"></script>
+            <script src="/adminside/lib/owlcarousel/owl.carousel.min.js"></script>
+            <script src="/adminside/lib/tempusdominus/js/moment.min.js"></script>
+            <script src="/adminside/lib/tempusdominus/js/moment-timezone.min.js"></script>
+            <script src="/adminside/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        
+            <!-- Template Javascript -->
+            <script src="/adminside/js/main.js"></script>
+            <!--jequary link -->
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+            <!--jequary data table -->
+            <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        
+            <script>
+                function viewOrderDetails(orderId) {
+                    $.ajax({
+                        url: `/order-details/${orderId}`,
+                        type: "GET",
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.success) {
+                                // Populate the modal with order details
+                                const orderDetailsOrderId = document.getElementById("orderDetailsOrderId");
+                                const orderDetailsDate = document.getElementById("orderDetailsDate");
+                                const orderDetailsPaymentMode = document.getElementById("orderDetailsPaymentMode");
+                                const orderDetailsTotalAmount = document.getElementById("orderDetailsTotalAmount");
+                                const orderDetailsProducts = document.getElementById("orderDetailsProducts");
+        
+                                orderDetailsOrderId.innerText = `Order ID: ${response.order._id}`;
+                            
+                               // Convert the date string to a Date object
+const orderDate = new Date(response.order.createdAt);
+
+// Format the date as "YYYY-MM-DD HH:mm:ss"
+const formattedDate = orderDate.toLocaleString('en-US', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit'
+});
+
+// Now you can use the formatted date
+orderDetailsDate.innerText = `Date: ${formattedDate}`;
+
+                                orderDetailsPaymentMode.innerText = `Payment Mode: ${response.order.paymentMethod}`;
+                                orderDetailsTotalAmount.innerText = `Total Amount: ${response.order.total}`;
+        
+                                // Clear previous product details
+                                orderDetailsProducts.innerHTML = "";
+        
+                                // Iterate over products and display their information
+                                response.order.items.forEach((item, index) => {
+                                    const productDetails = `
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <img src="/productImages/${item.product.image[index]}" alt="${item.product.productname}" class="img-fluid">
+                                            </div>
+                                            <div class="col-md-9">
+                                                <p>Name: ${item.product.productname}</p>
+                                                <p>Quantity: ${item.quantity}</p>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    `;
+                                    orderDetailsProducts.insertAdjacentHTML("beforeend", productDetails);
+                                });
+        
+                                // Show the modal
+                                $("#orderDetailsModal").modal("show");
+                            } else {
+                                // Handle error if needed
+                                console.log("Error fetching order details");
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        },
+                    });
+                }
+            </script>
+            <style>
+                .truncate {
+                    max-width: 100px; /* Adjust the width as needed */
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            </style>
+        
+            <script>
+                function changeStatus(status, index) {
+                    document.getElementById('statusDropdown' + index).innerHTML = status;
+                }
+        
+                $(document).ready(function () {
+                    $('#mytable').DataTable();
+                });
+        
+                $(document).ready(function() {
+                    $('.order-status-select').change(function() {
+                        var orderId = $(this).data('order-id');
+                        var newStatus = $(this).val();
+        
+                        $.ajax({
+                            url: '/admin/updateOrderStatus/' + orderId, // Update the URL to match the server-side route
+                            method: 'POST',
+                            data: { status: newStatus },
+                            success: function(response) {
+                                console.log(response); // You can handle the response here if needed
+                            },
+                            error: function(error) {
+                                console.log(error); // Handle the error if necessary
+                            }
+                        });
+                    });
+                });
+            </script>
+        </body>
+        
+        </html>

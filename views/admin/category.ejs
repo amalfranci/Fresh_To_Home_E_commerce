@@ -1,0 +1,297 @@
+<%- include("./partials/header") %>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner"
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-light navbar-light">
+                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary"><i class="fa me-2"></i>FreshToHome</h3>
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <img class="rounded-circle" src="/adminside/img/user.jpg" alt=""
+                            style="width: 40px; height: 40px;">
+                        <div
+                            class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+                        </div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0">AMAL FRANCIS</h6>
+                        <span>Admin</span>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="home" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="usermanage" class="nav-item nav-link "><i class="fa fa-user me-2"></i>User </a>
+                    <a href="#" class="nav-item nav-link active"><i class="fa fa-keyboard me-2"></i>Category</a>
+                    <a href="products" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Products</a>
+                    <a href="ordermanage" class="nav-item nav-link"><i class="fa fa-truck me-2"></i>Order</a>
+                    <a href="coupon" class="nav-item nav-link"><i class="fa fa-gift   me-2"></i>Coupon</a> 
+                    <a href="addBanner" class="nav-item nav-link "><i class="fa fa-flag   me-2"></i>Banner</a> 
+                    <a href="salesReport" class="nav-item nav-link "><i class="fa fa-file me-2"></i>Sales Report</a>
+                      
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <form class="d-none d-md-flex ms-4">
+                    <input class="form-control border-0" type="search" placeholder="Search">
+                </form>
+                <div class="navbar-nav align-items-center ms-auto">
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="/adminside/img/user.jpg" alt=""
+                                style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">AMAL FRANCIS</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">My Profile</a>
+                            <a href="#" class="dropdown-item">Settings</a>
+                            <a href="logout" class="dropdown-item">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+            <% if (successMessage ) { %>
+                
+                <p style="color: #963106;"><%= successMessage %></p>
+           
+             <% } %>
+             
+             <% if (errorMessage) { %>
+             
+                 <p style="color: #963106;"><%= errorMessage %></p>
+             
+             <% } %>
+           
+            <!-- Category -->
+            <!-- Add Category Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCategoryModalLabel">Add Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/admin/addcategory" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="categoryInput" class="form-label">Category</label>
+                        <input type="text" class="form-control" id="categoryInput" name="category" placeholder="Enter category" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="iconUpload" class="form-label">Icon Upload</label>
+                        <input type="file" class="form-control" id="iconUpload" name="icon" accept="image/*">
+                    </div>
+                    <!-- Offer Percentage -->
+                    <div class="mb-3">
+                        <label for="offerPercentageInput" class="form-label">Offer Percentage</label>
+                        <input type="number" class="form-control" id="offerPercentageInput" name="offer[percentage]" placeholder="Enter offer percentage" required>
+                    </div>
+                    <!-- Offer Start Date -->
+                    <div class="mb-3">
+                        <label for="offerStartDateInput" class="form-label">Offer Start Date</label>
+                        <input type="date" class="form-control" id="offerStartDateInput" name="offer[startDate]" required>
+                    </div>
+                    <!-- Offer End Date -->
+                    <div class="mb-3">
+                        <label for="offerEndDateInput" class="form-label">Offer End Date</label>
+                        <input type="date" class="form-control" id="offerEndDateInput" name="offer[endDate]" required>
+                    </div>
+                    <!-- Offer Description -->
+                    <div class="mb-3">
+                        <label for="offerDescriptionInput" class="form-label">Offer Description</label>
+                        <textarea class="form-control" id="offerDescriptionInput" name="offer[description]" placeholder="Enter offer description"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+            
+            
+            <a href="category" class="btn btn-success mt-5" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                <span>Add Category</span>
+            </a>
+           
+            <div class="container-fluid pt-4 px-4">
+                <div class=" text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Users</h6>
+
+                    </div>
+                <div class="table-responsive">
+    <div class="col-12">
+        <div class="rounded h-100 p-4">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Category</th>
+                            <th  scope="col" >Image</th>
+                            <th  scope="col">Offer Percentage</th> 
+            <th scope="col">Offer Start Date</th>
+            <th scope="col">Offer End Date</th> 
+                            <th scope="col">Acton</th>
+                            <th scope="col">List/Unlist</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% if (typeof data !== 'undefined') { %>
+                            <% data.forEach(function(value, index) { %>
+                                <tr>
+                                    <th scope="row"><%= index + 1 %></th>
+                                    <td><%= value.category %></td>
+                                    <td><img src="<%='/CategoryIcons/'+value.icon%>" alt="Category Image" style="width: 50px;"></td>
+                                    
+                                        <td><%= value.offer.percentage %> %</td> <!-- Display offer percentage -->
+                    <td><%= value.offer.startDate ? value.offer.startDate.toISOString().split('T')[0] : '' %></td> <!-- Display offer start date -->
+                    <td><%= value.offer.endDate ? value.offer.endDate.toISOString().split('T')[0] : '' %></td> <!-- Display offer end date -->
+                    <td> <div>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editCategoryModal<%= value._id %>">Edit</button>
+                                        
+                                      
+                                        
+
+                                    </div>    
+                                    </td>
+                                    <td><a href="/admin/category/unlist/<%= value._id %>">
+                                        <% if (value.deleted) { %>
+                                          <button type="button" class="btn btn-success">List</button>
+                                        <% } else { %>
+                                          <button type="button" class="btn btn-danger">Unlist</button>
+                                        <% } %>
+                                      </a></td>
+
+                                 
+                                  
+                                </tr>
+
+
+  <!--/ edit modal -->
+
+
+<!-- Modal -->
+<form action="/admin/editcategory/<%= value._id %>" method="post" enctype="multipart/form-data">
+
+    <div class="modal fade" id="editCategoryModal<%= value._id %>" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editCategoryModalLabel">Edit Category</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Category Name -->
+            <div class="mb-3">
+              <label for="categoryName" class="form-label">Category Name</label>
+              <input type="text" name="name" class="form-control" id="categoryName" value="<%= value.category %>">
+            </div>
+            <!-- Icon Selection -->
+            <!-- Image Upload -->
+            <div class="mb-3">
+              <label for="categoryImage" class="form-label">Upload Icon Image</label>
+              <input type="file" name="icon" class="form-control" accept="image/*" id="categoryImage">
+            </div>
+  
+            <!-- Offer Percentage -->
+            <div class="mb-3">
+              <label for="offerPercentageInput" class="form-label">Offer Percentage</label>
+              <input type="number" class="form-control" id="offerPercentageInput" name="offer[percentage]" value="<%= value.offer.percentage %>" required>
+            </div>
+  
+            <!-- Offer Start Date -->
+            <div class="mb-3">
+              <label for="offerStartDateInput" class="form-label">Offer Start Date</label>
+              <input type="date" class="form-control" id="offerStartDateInput" name="offer[startDate]" value="<%= value.offer.startDate ? value.offer.startDate.toISOString().split('T')[0] : '' %>" required>
+            </div>
+  
+            <!-- Offer End Date -->
+            <div class="mb-3">
+              <label for="offerEndDateInput" class="form-label">Offer End Date</label>
+              <input type="date" class="form-control" id="offerEndDateInput" name="offer[endDate]" value="<%= value.offer.endDate ? value.offer.endDate.toISOString().split('T')[0] : '' %>" required>
+            </div>
+  
+            <!-- Offer Description -->
+            <div class="mb-3">
+              <label for="offerDescriptionInput" class="form-label">Offer Description</label>
+              <textarea class="form-control" id="offerDescriptionInput" name="offer[description]" placeholder="Enter offer description"><%= value.offer.description %></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+
+
+
+                            <% }) %>
+                        <% } %>
+
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Content End -->
+        <!-- Add Category Modal -->
+<!-- Add Category Modal -->
+
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+   
+
+    <!-- JavaScript Libraries -->
+    <%- include("./partials/footer") %>
+
+
+
+
+
+
