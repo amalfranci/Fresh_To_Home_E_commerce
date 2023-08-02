@@ -58,7 +58,7 @@ app.use(function(err, req, res, next) {
 });
 
 mongoose
-  .connect('mongodb://127.0.0.1:27017/E_Commerce_Project', { useNewUrlParser: true })
+  .connect('mongodb+srv://amalfrancis744:amal12345@freshtohome.n7mqs88.mongodb.net/', { useNewUrlParser: true })
   .then(() => {
     console.log('Database connected successfully');
   })
