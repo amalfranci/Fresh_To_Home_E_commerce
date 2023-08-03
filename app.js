@@ -58,7 +58,7 @@ app.use(function(err, req, res, next) {
 });
 
 mongoose
-  .connect('mongodb+srv://amalfrancis744:amal12345@freshtohome.n7mqs88.mongodb.net/', { useNewUrlParser: true })
+  .connect('mongodb+srv://amalfrancis744:amal12345@freshtohome.n7mqs88.mongodb.net/freshtohome?retryWrites=true&w=majority', { useNewUrlParser: true })
   .then(() => {
     console.log('Database connected successfully');
   })
