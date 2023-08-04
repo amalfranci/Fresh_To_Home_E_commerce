@@ -7,6 +7,7 @@ const { otpGen } = require("../controllers/otpControllers");
 const Order = require("../models/orderModel");
 const { ObjectId } = require("mongodb");
 const Banner = require("../models/bannerModel")
+require('dotenv').config()
 
 
 
@@ -104,8 +105,8 @@ const sMail = (email, otp) => {
     port: 465,
     secure: true,
     auth: {
-      user: "amalfrancis744@gmail.com",
-      pass: "nmifhllqxjmxtful",
+      user: process.env.nodeMailerUserName,
+      pass: process.env.nodeMailerPassword,
     },
   });
 

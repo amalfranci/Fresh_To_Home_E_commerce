@@ -6,6 +6,7 @@ const Order = require("../models/orderModel")
 const couponCollection=require("../models/couponModel");
 const { render } = require("ejs");
 const pdfkit = require('pdfkit')
+require('dotenv').config()
 //admin login
 
 
@@ -17,7 +18,9 @@ const getLogin=(req,res)=>{
 const postLogin = (req, res) => {
     try {
       const { email, password } = req.body;
-      if (email === "admin@gmail.com" && password === "123") {
+
+     
+      if (email ===  process.env.adminUserName && password === process.env.adminPassword) {
         req.session.login = true;
         res.redirect("/admin/home");
         console.log(req.body);

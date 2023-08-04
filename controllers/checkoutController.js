@@ -4,11 +4,12 @@ const categorycollections = require("../models/categoryModel");
 const productcollection = require("../models/productModel");
 const Razorpay = require('razorpay');
 const userRouter = require("../routes/users");
-const Coupon=require("../models/couponModel")
+const Coupon = require("../models/couponModel")
+require('dotenv').config()
 
 const razorpay = new Razorpay({ 
-  key_id: 'rzp_test_oLMzBcAQa08Hks', 
-  key_secret: 'YZ3PhIrXxOCbpCTy2bqavBqV'
+  key_id: process.env.razorpaykey_id, 
+  key_secret: process.env.razorpaykey_secret
 })
   
 
