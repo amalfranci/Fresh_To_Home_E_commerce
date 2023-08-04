@@ -270,8 +270,8 @@ const getADD= async (req, res) => {
 };
 
 
-const  downloadOrder=async (req, res) => {
-    const   orderId = req.params.orderId;
+const downloadOrder = async (req, res) => {
+  const orderId = req.params.orderId;
 
   try {
     // Fetch the order details from the database based on the orderId
@@ -305,8 +305,22 @@ const  downloadOrder=async (req, res) => {
 
     // Products and Quantity
     doc.fontSize(14).text('Products:', { underline: true });
+    doc.font('Helvetica-Bold'); // Use a bold font for the table headers
+
+    // Table headers
+    doc.text('No.', 50, doc.y, { width: 30 });
+    doc.text('Product Name', 150, doc.y, { width: 250 });
+    doc.text('Quantity', 400, doc.y, { width: 100 });
+
+    doc.moveDown(0.5);
+    doc.font('Helvetica'); // Switch back to the regular font
+
+    // Table rows
     order.items.forEach((item, index) => {
-      doc.fontSize(12).text(`${index + 1}. ${item.product.productname}: ${item.quantity}`);
+      const y = doc.y;
+      doc.text(`${index + 1}.`, 50, y, { width: 30 });
+      doc.text(item.product.productname, 150, y, { width: 250 });
+      doc.text(item.quantity.toString(), 400, y, { width: 100 });
     });
     doc.moveDown(0.5);
 
@@ -327,7 +341,7 @@ const  downloadOrder=async (req, res) => {
       doc.fontSize(12).text(`Discount: ${order.discount}`);
     }
     doc.fontSize(12).text(`Total: ${order.total}`);
-    
+
     // Finalize the PDF and end the response stream
     doc.end();
   } catch (error) {

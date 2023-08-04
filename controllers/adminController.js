@@ -118,6 +118,7 @@ const sortSales = async (req, res) => {
         },
       },
     ]);
+ 
 
     const paymentData = await Order.aggregate([
       { $match: { createdAt: { $gte: calculateStartDate(interval) } } },
@@ -250,10 +251,13 @@ const updateOrderStatus = async (req, res) => {
           { $inc: { quantity: item.quantity } }
         );
       }
+      order.orderStatusTime=Date.now
     }
 
     // Update the order status in the database
     await Order.updateOne({ _id: orderId }, { $set: { status: newStatus } });
+     await order.save();
+
 
     res.status(200).send("Order status updated successfully");
   } catch (error) {
@@ -269,7 +273,7 @@ const getCoupon = async (req, res) => {
     // Fetch all coupons from the database
     const couponData = await couponCollection.find({});
 
-    res.render("admin/coupon", { couponData });
+    res.render("admin/coupon", { couponData,errorMessage: req.flash("error") });
   } catch (error) {
     console.log(error.message);
   }
@@ -355,6 +359,24 @@ const editCoupon = async (req, res) => {
     res.status(500).json({ success: false, error: "An error occurred" }); // Send error response
   }
 };
+
+
+// DELETE COUPON 
+const postDeleteCoupon= async (req, res) => {
+  const couponId = req.params.couponId;
+
+  try {
+    // Find the coupon by ID and delete it
+    await couponCollection.findByIdAndDelete(couponId);
+    res.json({ success: true, message: 'Coupon deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Error deleting coupon' });
+  }
+};
+
+
+
 
 
 const getSalesReport = async (req, res) => {
@@ -454,40 +476,43 @@ const getPdfSales = async (req, res) => {
 // report
 const getPdfTotal_Sales = async (req, res) => {
   try {
+    // Get the selected period from the query parameters
+    const period = req.query.period;
+
     // Fetch sales data from the database
     const salesData = await Order.find().populate('user').populate('items.product');
 
-    // Perform additional processing on sales data
-     const totalSales = calculateTotal(salesData);
-    const totalSalesCOD = calculateTotalSales(salesData, 'cod');
-    const totalSalesCard = calculateTotalSales(salesData, 'card');
-    const highestSoldProduct = findHighestSoldProduct(salesData);
+    // Filter the sales data based on the selected period
+    const filteredSalesData = filterSalesDataByPeriod(salesData, period);
+
+    // Perform additional processing on filtered sales data
+    const totalSales = calculateTotal(filteredSalesData);
+    const totalSalesCOD = calculateTotalSales(filteredSalesData, 'cod');
+    const totalSalesCard = calculateTotalSales(filteredSalesData, 'card');
+    const highestSoldProduct = findHighestSoldProduct(filteredSalesData);
 
     // Create a new PDF document
     const doc = new pdfkit();
 
     // Set appropriate headers for PDF download
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename=sales_report.pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=${period.toLowerCase()}_sales_report.pdf`);
 
     // Write the PDF content
     doc.pipe(res);
 
     // Add the sales report data to the PDF
-    doc.fontSize(20).text('Sales Report', { align: 'center' });
+    doc.fontSize(20).text(`${period} Sales Report`, { align: 'center' });
     doc.moveDown(1);
-        // Display Total Sales
+
+    // Display Total Sales
     doc.fontSize(14).text('Total Sales: Rs.' + totalSales.toFixed(2), { align: 'left' });
     doc.moveDown(1);
 
-    // Display Total Sales for COD and Card payments    doc.fontSize(14).text('COD Orders:', { align: 'left' });
-
-    
+    // Display Total Sales for COD and Card payments
     doc.fontSize(14).text(`Total Sales (COD): Rs.${totalSalesCOD.toFixed(2)}`, { align: 'left' });
-
     doc.fontSize(14).text(`Total Sales (Card): Rs.${totalSalesCard.toFixed(2)}`, { align: 'left' });
     doc.moveDown(1);
-
 
     // Display Highest Sold Product
     doc.fontSize(14).text('Highest Sold Product: ' + highestSoldProduct.productname, { align: 'left' });
@@ -498,6 +523,7 @@ const getPdfTotal_Sales = async (req, res) => {
     res.status(500).send('Failed to generate sales report.');
   }
 };
+
 const calculateTotal = (salesData) => {
   let totalSales = 0;
   salesData.forEach(order => {
@@ -544,6 +570,25 @@ const findHighestSoldProduct = (salesData) => {
 
 
 
+const filterSalesDataByPeriod = (salesData, period) => {
+  const currentDate = new Date();
+  const filteredSalesData = salesData.filter(order => {
+    const orderDate = new Date(order.createdAt);
+    if (period === 'daily') {
+      return orderDate.toDateString() === currentDate.toDateString();
+    } else if (period === 'weekly') {
+      const weekStart = new Date(currentDate);
+      weekStart.setDate(currentDate.getDate() - currentDate.getDay());
+      return orderDate >= weekStart;
+    } else if (period === 'monthly') {
+      return orderDate.getMonth() === currentDate.getMonth() && orderDate.getFullYear() === currentDate.getFullYear();
+    }
+    return true; // Return all data if period is not specified or invalid
+  });
+  return filteredSalesData;
+};
+
+
 
 
 
@@ -569,6 +614,7 @@ module.exports={
   editCoupon,
   getSalesReport,
   getPdfSales,
-  getPdfTotal_Sales
+  getPdfTotal_Sales,
+  postDeleteCoupon
     
 }

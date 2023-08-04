@@ -284,17 +284,17 @@
                           <button id="cancelButton<%= index %>" type="button" class="btn btn-danger" onclick="showCancelConfirmationModal('<%= order._id %>', <%= index %>)">Cancel</button>
                         <% } else if (order.status === "completed") { %>
                           <% const now = new Date(); %>
-                          <% const completedAt = new Date(order.completedAt); %>
-                          <% const timeLimit = 1* 60 * 60 * 1000; // 2 hours in milliseconds %>
-                          <% const timeDifference = now - completedAt; %>
-                          <% if (timeDifference <= timeLimit) { %>
+                          <% const orderStatusTime = new Date(order.orderStatusTime); %>
+                          <% const timeLimit = 60 * 60 * 1000; // 1 hour in milliseconds %>
+                          <% const timeDifference = now - orderStatusTime; %>
+                          <% if (timeDifference > timeLimit) { %>
                             <button class="btn btn-warning" disabled>Return</button>
-                           
-                            <% } else { %>
-                              <button class="btn btn-warning" onclick="showReturnConfirmationModal('<%= order._id %>')">Return</button>
-                            <% } %>
+                          <% } else { %>
+                            <button class="btn btn-warning" onclick="showReturnConfirmationModal('<%= order._id %>')">Return</button>
+                          <% } %>
                         <% } %>
                       </td>
+                      
                       
                       <td class="text-center">
                         <button type="button" class="btn btn-primary" onclick="viewOrderDetails('<%= order._id %>')">View</button>
@@ -302,7 +302,7 @@
                       <td class="text-center" id="statusCell<%= index %>">
                         <!-- The order status will be displayed here -->
                         <%= order.status %>
-                        <button type="button" class="btn " onclick="downloadInvoice('<%= order._id %>')">Download</button>
+                        <button type="button" class="btn btn-link " onclick="downloadInvoice('<%= order._id %>')">Download</button>
                       </td>
                       <td> <!-- Add this cell to display product review -->
                         <button class="btn btn-secondary" onclick="showProductReviewModal('<%= order._id %>')">Review</button>
@@ -337,6 +337,32 @@
     </div>
   </div>
 </div>
+<script>
+  function updateReturnButtonState(orderId, orderStatusTime) {
+    const now = new Date();
+    const timeLimit = 60 * 60 * 1000; // 1 hour in milliseconds
+    const timeDifference = now - new Date(orderStatusTime);
+    const returnButton = document.querySelector(`#returnButton_${orderId}`);
+
+    if (returnButton) {
+      if (timeDifference > timeLimit) {
+        returnButton.setAttribute("disabled", "disabled");
+      } else {
+        returnButton.removeAttribute("disabled");
+      }
+    }
+  }
+
+  // Call the function for each order when the page loads
+  document.addEventListener("DOMContentLoaded", function () {
+    <% order.reverse().forEach(function(order, index) { %>
+      <% if (order.status === 'completed') { %>
+        updateReturnButtonState('<%= order._id %>', '<%= order.orderStatusTime %>');
+      <% } %>
+    <% }) %>
+  });
+</script>
+
 
 
 <!-- Add this modal for confirmation -->
@@ -493,6 +519,7 @@
     });
   }
 </script>
+
 
 
 
@@ -855,8 +882,14 @@ function cancelOrder(orderId, index) {
 
             // Create a cell for the date and add it to the row
             const dateCell = document.createElement("td");
-            dateCell.textContent = historyItem.date;
-            row.appendChild(dateCell);
+const rawDate = historyItem.date;
+
+const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+const formattedDate = new Date(rawDate).toLocaleDateString(undefined, options);
+
+dateCell.textContent = formattedDate;
+row.appendChild(dateCell);
+
 
             // Create a cell for the amount and add it to the row
             const amountCell = document.createElement("td");

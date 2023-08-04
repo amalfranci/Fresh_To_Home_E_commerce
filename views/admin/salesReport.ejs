@@ -90,138 +90,113 @@
                 </div>
             </nav>
             <!-- Navbar End -->
-      
+            <!-- Dropdown Button for Report Period -->
+            <div class="dropdown ms-4">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="reportPeriodDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Select Report Period
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="reportPeriodDropdown">
+                <li><a class="dropdown-item" href="#" id="oneDayReport">One Day</a></li>
+                <li><a class="dropdown-item" href="#" id="weeklyReport">Weekly</a></li>
+                <li><a class="dropdown-item" href="#" id="monthlyReport">Monthly</a></li>
+              </ul>
+            </div>
+            
+            <!-- Table for Reports -->
             <div class="container-fluid pt-4 px-4">
-                <div class="text-center rounded p-4">
-                  <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">Reports</h6>
-                  </div>
-                  <div class="table-responsive">
-                    <div class="col-12">
-                      <div class="rounded h-100 p-4">
-                        <div class="table-responsive">
-                          <table class="table" id="mytable">
-                              <thead>
-                                <tr>
-                                  <th scope="col">No</th>
-                                  <th scope="col">Report Name</th>
-                                  <th scope="col">Download</th>
-                                
-        
-                                </tr>
-                              </thead>
-                              <tbody>
-                               
-                                    <tr>
-                                      <td>1</td>
-                                      <td>User Wise Sales Report</td>
-                                      <td><!-- Add this link wherever you want the button to appear -->
-                                        <a href="#" class="btn btn-primary" id="downloadSalesReport"> User Report (PDF)</a>
-                                        </td>
-                                     
-                                   
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Total Sales Report</td>
-                                        <td><!-- Add this link wherever you want the button to appear -->
-                                            <a href="#" class="btn btn-primary" id="SalesReport"> Sales Report (PDF)</a>
-                                          </td>
-                                       
-                                     
-                                      </tr>
-                                   
-                                 
-                            
-                              </tbody>
-                            </table>
-                        </div>
+              <div class="text-center rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                  <h6 class="mb-0">Reports</h6>
+                </div>
+                <div class="table-responsive">
+                  <div class="col-12">
+                    <div class="rounded h-100 p-4">
+                      <div class="table-responsive">
+                        <table class="table" id="mytable">
+                          <thead>
+                            <tr>
+                              <th scope="col">No</th>
+                              <th scope="col">Report Name</th>
+                              <th scope="col">Download</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>1</td>
+                              <td>User Wise Sales Report</td>
+                              <td><!-- Add this link wherever you want the button to appear -->
+                                <a href="#" class="btn btn-primary" id="downloadSalesReport">User Report (PDF)</a>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>2</td>
+                              <td>Total Sales Report</td>
+                              <td><!-- Add this link wherever you want the button to appear -->
+                                <a href="#" class="btn btn-primary" id="SalesReport">Sales Report (PDF)</a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <script>
-                // Add an event listener to the downloadSalesReport button
-                document.getElementById('downloadSalesReport').addEventListener('click', function () {
-                  // Create a new XMLHttpRequest
-                  const xhr = new XMLHttpRequest();
-              
-                  // Set up the request
-                  xhr.open('GET', '/admin/generate_sales_report_pdf', true);
-                  xhr.responseType = 'blob'; // Set the response type to blob to handle binary data
-              
-                  // On successful request completion
-                  xhr.onload = function () {
-                    if (xhr.status === 200) {
-                      // Create a blob URL from the received blob data
-                      const blobUrl = URL.createObjectURL(xhr.response);
-              
-                      // Create an anchor element to trigger the download
-                      const downloadLink = document.createElement('a');
-                      downloadLink.href = blobUrl;
-                      downloadLink.download = 'user_wise_sales_report.pdf'; // Set the filename for the downloaded PDF
-                      downloadLink.click();
-              
-                      // Release the URL object after the download has started
-                      URL.revokeObjectURL(blobUrl);
-                    } else {
-                      console.error('Error generating PDF sales report:', xhr.status);
-                    }
-                  };
-              
-                  // On request error
-                  xhr.onerror = function () {
-                    console.error('Error generating PDF sales report.');
-                  };
-              
-                  // Send the request
-                  xhr.send();
-                });
-              </script>
-              <script>
-                // Add an event listener to the downloadSalesReport button
-                document.getElementById('SalesReport').addEventListener('click', function () {
-                  // Create a new XMLHttpRequest
-                  const xhr = new XMLHttpRequest();
-              
-                  // Set up the request
-                  xhr.open('GET', '/admin/sales_report_pdf', true);
-                  xhr.responseType = 'blob'; // Set the response type to blob to handle binary data
-              
-                  // On successful request completion
-                  xhr.onload = function () {
-                    if (xhr.status === 200) {
-                      // Create a blob URL from the received blob data
-                      const blobUrl = URL.createObjectURL(xhr.response);
-              
-                      // Create an anchor element to trigger the download
-                      const downloadLink = document.createElement('a');
-                      downloadLink.href = blobUrl;
-                      downloadLink.download = 'sales_report.pdf'; // Set the filename for the downloaded PDF
-                      downloadLink.click();
-              
-                      // Release the URL object after the download has started
-                      URL.revokeObjectURL(blobUrl);
-                    } else {
-                      console.error('Error generating PDF sales report:', xhr.status);
-                    }
-                  };
-              
-                  // On request error
-                  xhr.onerror = function () {
-                    console.error('Error generating PDF sales report.');
-                  };
-              
-                  // Send the request
-                  xhr.send();
-                });
-              </script>
-              
-              
+            </div>
             
-
+            <!-- JavaScript code -->
+            <script>
+              // Function to handle report download based on the selected period
+              function downloadReport(period) {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', `/admin/sales_report_pdf?period=${period}`, true);
+                xhr.responseType = 'blob';
+            
+                xhr.onload = function () {
+                  if (xhr.status === 200) {
+                    const blobUrl = URL.createObjectURL(xhr.response);
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = blobUrl;
+                    downloadLink.download = `${period.toLowerCase()}_sales_report.pdf`;
+                    downloadLink.click();
+                    URL.revokeObjectURL(blobUrl);
+                  } else {
+                    console.error('Error generating PDF sales report:', xhr.status);
+                  }
+                };
+            
+                xhr.onerror = function () {
+                  console.error('Error generating PDF sales report.');
+                };
+            
+                xhr.send();
+              }
+            
+              // Add event listeners for dropdown items
+              document.getElementById('oneDayReport').addEventListener('click', function () {
+                downloadReport('daily');
+              });
+            
+              document.getElementById('weeklyReport').addEventListener('click', function () {
+                downloadReport('weekly');
+              });
+            
+              document.getElementById('monthlyReport').addEventListener('click', function () {
+                downloadReport('monthly');
+              });
+            
+              // Add an event listener to the downloadSalesReport button
+              document.getElementById('downloadSalesReport').addEventListener('click', function () {
+                // Call the downloadReport function with 'user_wise' as the period
+                downloadReport('user_wise');
+              });
+            
+              // Add an event listener to the SalesReport button
+              document.getElementById('SalesReport').addEventListener('click', function () {
+                // Call the downloadReport function with 'overall' as the period
+                downloadReport('overall');
+              });
+            </script>
         
            
             <!-- Category -->

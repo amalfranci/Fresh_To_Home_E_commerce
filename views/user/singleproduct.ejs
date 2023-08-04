@@ -47,30 +47,39 @@
           <form action="/cart/<%= product._id %>" method="POST">
             <div class="product__details__text">
               <h3><%= product.productname %></h3>
-              <div class="product__details__rating">
-                <% if (product.reviews && product.reviews.length > 0) { %>
-                  <% let totalRating = 0; %>
-                  <% product.reviews.forEach(function(review) { %>
-                    <% totalRating += review.rating; %>
-                  <% }) %>
-                  <% const averageRating = totalRating / product.reviews.length; %>
-                  <% for (let i = 1; i <= 5; i++) { %>
-                    <% if (i <= averageRating) { %>
-                      <i class="fa fa-star"></i>
-                    <% } else if (i - averageRating <= 0.5) { %>
-                      <i class="fa fa-star-half-o"></i>
-                    <% } else { %>
-                      <i class="fa fa-star-o"></i>
-                    <% } %>
-                  <% } %>
-                  <span class="review-count clickable" data-toggle="modal" data-target="#reviewsModal">
-                    <%= product.reviews.length %> review<%= product.reviews.length === 1 ? '' : 's' %>
-                  </span>
-                <% } else { %>
-                  <span>No reviews yet</span>
-                <% } %>
-              </div>
-              
+             <div class="product__details__rating">
+  <% if (product.reviews && product.reviews.length > 0) { %>
+    <% const latestReviews = {}; %>
+    <% product.reviews.forEach(function(review) { %>
+      <% const userId = review.user._id.toString(); %>
+      <% if (!latestReviews[userId] || review.createdAt > latestReviews[userId].createdAt) { %>
+        <% latestReviews[userId] = review; %>
+      <% } %>
+    <% }) %>
+    <% let totalRating = 0; %>
+    <% let totalReviews = 0; %>
+    <% Object.values(latestReviews).forEach(function(review) { %>
+      <% totalRating += review.rating; %>
+      <% totalReviews += 1; %>
+    <% }) %>
+    <% const averageRating = totalRating / totalReviews; %>
+    <% for (let i = 1; i <= 5; i++) { %>
+      <% if (i <= averageRating) { %>
+        <i class="fa fa-star"></i>
+      <% } else if (i - averageRating <= 0.5) { %>
+        <i class="fa fa-star-half-o"></i>
+      <% } else { %>
+        <i class="fa fa-star-o"></i>
+      <% } %>
+    <% } %>
+    <span class="review-count clickable" data-toggle="modal" data-target="#reviewsModal">
+      <%= totalReviews %> review<%= totalReviews === 1 ? '' : 's' %>
+    </span>
+  <% } else { %>
+    <span>No reviews yet</span>
+  <% } %>
+</div>
+
               
               
               <h5><del>Rs.<%= product.price %>/kg</del></h5>
@@ -293,7 +302,14 @@
       </div>
       <div class="modal-body">
         <% if (product.reviews && product.reviews.length > 0) { %>
+          <% const latestReviews = {}; %>
           <% product.reviews.forEach(function(review) { %>
+            <% const userId = review.user._id.toString(); %>
+            <% if (!latestReviews[userId] || review.createdAt > latestReviews[userId].createdAt) { %>
+              <% latestReviews[userId] = review; %>
+            <% } %>
+          <% }) %>
+          <% Object.values(latestReviews).forEach(function(review) { %>
             <div class="review-item">
               <div class="review-header">
                 <div class="user-icon">
@@ -301,9 +317,7 @@
                 </div>
                 <div class="user-info">
                   <p class="username"><%= review.user.name %></p>
-                  
                   <p class="review-date"><%= review.createdAt %></p>
-                  
                 </div>
                 <div class="rating">
                   <% for (let i = 1; i <= 5; i++) { %>
@@ -328,6 +342,7 @@
     </div>
   </div>
 </div>
+
 <!-- Add this script at the end of your HTML file or in a separate JavaScript file -->
 
 

@@ -60,8 +60,8 @@ adminRouter.get("/product/unlist/:id",session.logged,productControllers.unlistpo
 adminRouter.get("/category/unlist/:id", session.logged, categorycontroller.unlistcategory)
 adminRouter.get("/addBanner", session.logged, bannerController.getBanner)
 adminRouter.get("/salesReport", session.logged, adminController.getSalesReport)
-adminRouter.get("/generate_sales_report_pdf",session.logged, adminController.getPdfSales)
-adminRouter.get('/sales_report_pdf',session.logged, adminController.getPdfTotal_Sales)
+adminRouter.get("/sales_report_pdf",session.logged, adminController.getPdfTotal_Sales)
+
 
 
 
@@ -81,10 +81,12 @@ adminRouter.post("/editcoupon/:id",session.logged,adminController.editCoupon)
 adminRouter.post("/editproducts/:id",session.logged,upload,productControllers.editPostProduct)
 adminRouter.post('/updateOrderStatus/:id',session.logged,adminController.updateOrderStatus)
 adminRouter.post("/sort_sales_data", session.logged, adminController.sortSales)
+adminRouter.post('/sort_sales_report', session.logged,adminController.sortSales);
 adminRouter.post("/addcoupon", session.logged, adminController.postAddCoupon)
 adminRouter.post("/addBanner", session.logged, uploadBanner.single('banner'), bannerController.postBanner)
 adminRouter.post('/editbanner/:id', session.logged, uploadBanner.single('banner'), bannerController.postEdit)
-adminRouter.delete("/deletebanner/:id",session.logged,bannerController.deleteBanner)
+adminRouter.delete("/deletebanner/:id", session.logged, bannerController.deleteBanner)
+adminRouter.delete('/deletecoupon/:couponId',session.logged,adminController.postDeleteCoupon)
 
 
 
