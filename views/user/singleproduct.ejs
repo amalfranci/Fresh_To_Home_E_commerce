@@ -46,20 +46,20 @@
         <div class="col-lg-6 col-md-6">
           <form action="/cart/<%= product._id %>" method="POST">
             <div class="product__details__text">
-              <h3><%= product.productname %></h3>
+              <h3><%= product?.productname %></h3>
              <div class="product__details__rating">
-  <% if (product.reviews && product.reviews.length > 0) { %>
+  <% if (product?.reviews && product?.reviews.length > 0) { %>
     <% const latestReviews = {}; %>
-    <% product.reviews.forEach(function(review) { %>
-      <% const userId = review.user._id.toString(); %>
-      <% if (!latestReviews[userId] || review.createdAt > latestReviews[userId].createdAt) { %>
+    <% product?.reviews.forEach(function(review) { %>
+      <% const userId = review?.user?._id.toString(); %>
+      <% if (!latestReviews[userId] || review?.createdAt > latestReviews[userId]?.createdAt) { %>
         <% latestReviews[userId] = review; %>
       <% } %>
     <% }) %>
     <% let totalRating = 0; %>
     <% let totalReviews = 0; %>
-    <% Object.values(latestReviews).forEach(function(review) { %>
-      <% totalRating += review.rating; %>
+    <% Object?.values(latestReviews)?.forEach(function(review) { %>
+      <% totalRating += review?.rating; %>
       <% totalReviews += 1; %>
     <% }) %>
     <% const averageRating = totalRating / totalReviews; %>
@@ -301,27 +301,27 @@
         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <% if (product.reviews && product.reviews.length > 0) { %>
+        <% if (product?.reviews && product?.reviews.length > 0) { %>
           <% const latestReviews = {}; %>
-          <% product.reviews.forEach(function(review) { %>
-            <% const userId = review.user._id.toString(); %>
-            <% if (!latestReviews[userId] || review.createdAt > latestReviews[userId].createdAt) { %>
+          <% product?.reviews?.forEach(function(review) { %>
+            <% const userId = review?.user?._id.toString(); %>
+            <% if (!latestReviews[userId] || review?.createdAt > latestReviews[userId].createdAt) { %>
               <% latestReviews[userId] = review; %>
             <% } %>
           <% }) %>
-          <% Object.values(latestReviews).forEach(function(review) { %>
+          <% Object?.values(latestReviews).forEach(function(review) { %>
             <div class="review-item">
               <div class="review-header">
                 <div class="user-icon">
                   <i class="fa fa-user"></i>
                 </div>
                 <div class="user-info">
-                  <p class="username"><%= review.user.name %></p>
-                  <p class="review-date"><%= review.createdAt %></p>
+                  <p class="username"><%= review?.user?.name %></p>
+                  <p class="review-date"><%= review?.createdAt %></p>
                 </div>
                 <div class="rating">
                   <% for (let i = 1; i <= 5; i++) { %>
-                    <% if (review.rating >= i) { %>
+                    <% if (review?.rating >= i) { %>
                       <i class="fa fa-star"></i>
                     <% } else { %>
                       <i class="fa fa-star-o"></i>
@@ -330,7 +330,7 @@
                 </div>
               </div>
               <div class="review-comment">
-                <p><%= review.comment %></p>
+                <p><%= review?.comment %></p>
               </div>
               <hr class="review-divider">
             </div>

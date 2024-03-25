@@ -148,11 +148,11 @@
                                             <% order.reverse().forEach(function(order, index) { %>
                                                 <tr>
                                                     <td><%= index + 1 %></td>
-                                                    <td class="truncate"><%= order.id %></td>
-                                                    <td class="truncate"><%= order.user.name %></td>
-                                                    <td class="truncate"><%= order.createdAt %></td>
-                                                    <td><%= order.total %></td>
-                                                    <td><%= order.paymentMethod %></td>
+                                                    <td class="truncate"><%= order?.id %></td>
+                                                    <td class="truncate"><%= order?.user?.name %></td>
+                                                    <td class="truncate"><%= order?.createdAt %></td>
+                                                    <td><%= order?.total %></td>
+                                                    <td><%= order?.paymentMethod %></td>
                                                     <td class="text-center">
                                                         <button type="button" class="btn btn-primary" onclick="viewOrderDetails('<%= order._id %>')">View</button>
                                                     </td>

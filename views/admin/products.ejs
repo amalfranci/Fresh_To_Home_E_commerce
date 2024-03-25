@@ -145,16 +145,16 @@
                 </thead>
                 <tbody>
                   <% if (products.length > 0) { %>
-                    <% products.reverse().forEach(function(product, index) { %>
+                    <% products?.reverse().forEach(function(product, index) { %>
                       <tr>
                         <td><%= index + 1 %></td>
-                        <td><%= product.productname %></td>
-                        <td><%= product.brand %></td>
-                        <td><%= product.price %></td>
-                        <td><%= product.offer_price %></td>
+                        <td><%= product?.productname %></td>
+                        <td><%= product?.brand %></td>
+                        <td><%= product?.price %></td>
+                        <td><%= product?.offer_price %></td>
                      
                         <td><%= product.quantity %></td>
-                        <td><%= product.category.category %></td>
+                        <td><%= product?.category?.category %></td>
                         <!-- <td><img style="height: 50px;" src="/productImages/<%= product.image[index] %>" width="50px" alt="img"></td> -->
   
   
