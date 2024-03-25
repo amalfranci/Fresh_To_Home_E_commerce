@@ -422,7 +422,7 @@ const getProducts = async (req, res) => {
         users: req.session.name,
       });
     } else {
-      res.render("user/login");
+      res.render("user/Login");
     }
   } catch (error) {
     console.log(error);
