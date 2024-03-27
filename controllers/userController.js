@@ -519,7 +519,7 @@ const getUserCredentials = async (req, res) => {
           console.log(error);
         } else {
           console.log("Email sent: " + info.response);
-          res.render("user/login", { message: "Check your mail for your credentials" });
+          res.render("user/Login", { message: "Check your mail for your credentials" });
         }
       });
     } else {
