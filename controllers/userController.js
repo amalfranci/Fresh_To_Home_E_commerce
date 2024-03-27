@@ -111,7 +111,7 @@ const sMail = (email, otp) => {
   });
 
   const mailOptions = {
-    from: "amalfrancis744@gmail.com",
+    from: "freshtoohome@gmail.com",
     to: email,
     subject: "Your OTP",
     text: `Your OTP is ${otp}`,
@@ -166,7 +166,7 @@ const verifyOtp = async (req, res) => {
       });
       const userData = await user.save();
       if (userData) {
-        res.render("user/login", { message: "registration succuss" });
+        res.render("user/Login", { message: "registration succuss" });
       }
     } else {
       res.render("user/signup", { message: "registration failed" });
@@ -502,13 +502,13 @@ const getUserCredentials = async (req, res) => {
         port: 465,
         secure: true,
         auth: {
-          user: "amalfrancis744@gmail.com",
-          pass: "nmifhllqxjmxtful",
+          user: "freshtoohome@gmail.com",
+          pass: "qjnpzpebahmqknyf",
         },
       });
 
       const mailOptions = {
-        from: "amalfrancis744@gmail.com",
+        from: "freshtoohome@gmail.com",
         to: email,
         subject: "Your Credentials for login",
         text: `Your email is: ${email}\nYour password is: ${user.password}`,
